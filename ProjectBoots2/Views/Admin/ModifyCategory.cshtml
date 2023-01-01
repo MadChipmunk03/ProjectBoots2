@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+}
+@model Category
+
+<form asp-controller="Admin" asp-action="ModifyCategory">
+    <div><input asp-for="Id" hidden class="form-control" /></div>
+
+    <div>
+        <div><label asp-for="CategoryName">Název:</label></div>
+        <div><input asp-for="CategoryName" class="form-control" /></div>
+        <div><span asp-validation-for="CategoryName"></span></div>
+    </div>
+
+    <div class="mb-4">
+        <div><label asp-for="ParentId">Rodič:</label></div>
+        <div><select asp-for="ParentId" asp-items="@ViewBag.Categories" class="form-control"></select></div>
+    </div>
+
+    <div class="text-end">
+        @if (@ViewBag.Category.Id != 0)
+        {
+            <a asp-controller="Admin" asp-action="DelCategory" asp-route-id="@ViewBag.Category.Id">
+                <button type="button" class="btn btn-danger mt-4">Odstranit</button>
+            </a>
+        }
+        <button type="submit" class="btn btn-primary mt-4">Potvrdit</button>
+    </div>
+</form>

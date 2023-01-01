@@ -1,0 +1,220 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+}
+@model ProductFormModel
+
+
+<h1 class="text-center">@ViewBag.Product.Title (@ViewBag.Product.Id)</h1>
+<form asp-controller="Admin" asp-action="ModifyProduct" id="mainForm">
+    <div><input asp-for="SideRequest" hidden class="form-control" id="Prasarna" /></div>
+    <div><input asp-for="Product.Id" hidden class="form-control" /></div>
+    <div class="row">
+        <div class="col">
+            <div class="mb-4">
+                <div><label asp-for="Product.Title"><h3>Titulek:</h3></label></div>
+                <div><input asp-for="Product.Title" class="form-control" /></div>
+                <div><span asp-validation-for="Product.Title"></span></div>
+            </div>
+
+            <div class="mb-4">
+                <div><label asp-for="Product.Description"><h3>Popis:</h3></label></div>
+                <div><textarea asp-for="Product.Description" rows="5" class="form-control" > </textarea></div>
+                <div><span asp-validation-for="Product.Description"></span></div>
+            </div>
+
+            <div class="mb-4">
+                <div><label asp-for="Product.CategoryId"><h3>Kategorie:</h3></label></div>
+                <div><select asp-for="Product.CategoryId" asp-items="@ViewBag.Categories" class="form-control"></select></div>
+            </div>
+
+            <div class="mb-4">
+                <h3>Parametry:</h3>
+                <div class="row mb-2">
+                    <div class="col">
+                        <div><label asp-for="Product.ParamType">Typ:</label></div>
+                    </div>
+                    <div class="col">
+                        <div><input asp-for="Product.ParamType" class="form-control" /></div>
+                        <div><span asp-validation-for="Product.ParamType"></span></div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col">
+                        <div><label asp-for="Product.ParamMaterial">Materiál:</label></div>
+                    </div>
+                    <div class="col">
+                        <div><input asp-for="Product.ParamMaterial" class="form-control" /></div>
+                        <div><span asp-validation-for="Product.ParamMaterial"></span></div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col">
+                        <div><label asp-for="Product.ParamPurpose">Určení:</label></div>
+                    </div>
+                    <div class="col">
+                        <div><input asp-for="Product.ParamPurpose" class="form-control" /></div>
+                        <div><span asp-validation-for="Product.ParamPurpose"></span></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div><label asp-for="Product.ParamCode">Kód:</label></div>
+                    </div>
+                    <div class="col">
+                        <div><input asp-for="Product.ParamCode" class="form-control" /></div>
+                        <div><span asp-validation-for="Product.ParamCode"></span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h3>Obrázky</h3>
+                <table class="table table-striped">
+                    <tr class="bg-primary text-white">
+                        <th>Id</th>
+                        <th colspan="2">Url</th>
+                    </tr>
+                    @foreach (var item in ViewBag.Product.ProductImages)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td><a href="@item.Url" target="_blank">@item.Url</a></td>
+                            <td>
+                                <button class="btn btn-link" type="button" onclick="DelImgFunc(@item.Id)">❌</button>
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <script>
+                    function DelImgFunc(imgId) {
+                        document.getElementById("Prasarna").value = `ImgDel;${imgId}`;
+                        document.getElementById("mainForm").submit();
+                    }
+                </script>
+                <div style="display: flex">
+                    <div style="flex-grow: 1"><input id="imgUrl" type="url" placeholder="Zadejte url obrázku..." class="form-control" /></div>
+                    <div class="ms-4"><button class="btn btn-primary" type="button" onclick="AddImgFunc()">Přidat</button></div>
+                    <script>
+                        function AddImgFunc() {
+                            const urlValue = document.getElementById("imgUrl").value;
+                            document.getElementById("Prasarna").value = `ImgAdd;${urlValue}`;
+                            document.getElementById("mainForm").submit();
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div>
+                <h3>Variace:</h3>
+                <div class="row mb-4">
+                    <div class="col">
+                        <table class="table table-striped">
+                            <tr class="bg-primary text-white">
+                                <th colspan="2">Velikost</th>
+                            </tr>
+                            @foreach (var item in ViewBag.Sizes)
+                            {
+                                <tr>
+                                    <td>@item</td>
+                                    <td class="text-end"><button class="btn btn-link" type="button" onclick="DelSizeFunc(@item)">❌</button></td>
+                                </tr>
+                            }
+                        </table>
+                        <script>
+                            function DelSizeFunc(size) {
+                                document.getElementById("Prasarna").value = `SizeDel;${size}`;
+                                document.getElementById("mainForm").submit();
+                            }
+                        </script>
+                        <div style="display: flex">
+                            <div style="flex-grow: 1"><input placeholder="Zadejte velikost..." id="newSize" type="number" class="form-control" /></div>
+                            <div class="ms-4"><button class="btn btn-primary" type="button" onclick="AddSizeFunc()">Přidat</button></div>
+                            <script>
+                                function AddSizeFunc() {
+                                    const sizeValue = document.getElementById("newSize").value;
+                                    document.getElementById("Prasarna").value = `SizeAdd;${sizeValue}`;
+                                    document.getElementById("mainForm").submit();
+                                }
+                            </script>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <table class="table table-striped">
+                            <tr class="bg-primary text-white">
+                                <th colspan="2">Barva</th>
+                            </tr>
+                            @foreach (var item in ViewBag.Colors)
+                            {
+                                <tr>
+                                    <td>@item</td>
+                                    <td class="text-end"><button class="btn btn-link" type="button" onclick="DelColorFunc('@item')">❌</button></td>
+                                </tr>
+                            }
+                        </table>
+                        <script>
+                            function DelColorFunc(color) {
+                                console.log(color);
+                                document.getElementById("Prasarna").value = `ColorDel;${color}`;
+                                document.getElementById("mainForm").submit();
+                            }
+                        </script>
+                        <div style="display: flex">
+                            <div style="flex-grow: 1"><input id="newColor" style="box-sizing: border-box; height: 38px;" type="color" class="form-control" /></div>
+                            <div class="ms-4"><button class="btn btn-primary" type="button" onclick="AddColorFunc()">Přidat</button></div>
+                            <script>
+                                function AddColorFunc() {
+                                    const colorValue = document.getElementById("newColor").value;
+                                    document.getElementById("Prasarna").value = `ColorAdd;${colorValue}`;
+                                    document.getElementById("mainForm").submit();
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <link href="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.css" rel="stylesheet">
+
+                    <script src="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.js"></script>
+                    <script src="https://unpkg.com/bootstrap-table@1.21.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+
+                    <table id="variationTable" class="table table-striped">
+                        <thead>
+                            <tr class="bg-primary text-white">
+                                <th>Id</th>
+                                <th>Velikost</th>
+                                <th colspan="2">Barva</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.Variations)
+                            {
+                                <tr>
+                                    <td>@item.Id</td>
+                                    <td>@item.Size</td>
+                                    <td>@item.Color</td>
+                                    <td class="text-end">
+                                        <a asp-controller="Admin" asp-action="ModifyVariation" asp-route-id="@item.Id">
+                                            <p class="edit">✏</p>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-end">
+        @if (@ViewBag.Product.Id != 0)
+        {
+            <a asp-controller="Admin" asp-action="DelProduct" asp-route-id="@ViewBag.Product.Id">
+                <button type="button" class="btn btn-danger mt-4">Odstranit</button>
+            </a>
+        }
+        <button type="submit" name="submitProduct" class="btn btn-primary mt-4">Potvrdit</button>
+    </div>
+</form>

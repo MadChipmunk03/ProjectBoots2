@@ -1,0 +1,86 @@
+﻿@page
+@{
+    Layout = "_LayoutAdmin";
+}
+
+@model ProjectBoots2.Views.Admin.IndexModel
+@{
+    <script>
+        function RedirectTo(url) {
+            window.location.href = url;
+        }
+    </script>
+
+    <nav>
+                        <h3><a asp-controller="Admin" asp-action="Index" asp-fragment="administratori">Administrátoři</a></h3>
+                        <h3><a asp-controller="Admin" asp-action="Index" asp-fragment="kategorie">Kategorie</a></h3>
+                        <h3><a asp-controller="Admin" asp-action="Index" asp-fragment="produkty">Produkty</a></h3>
+    </nav>
+    <hr class="mb-4"/>
+    <h2 id="administratori">Administrátoři</h2>
+    <table class="table table-striped table-hover">
+        <tr class="bg-primary text-white">
+            <th>Id</th>
+            <th colspan="2">Administrátor</th>
+        </tr>
+        @foreach (var item in ViewBag.Admins)
+        {
+            <tr class="product-item" onclick="RedirectTo('./Admin/ModifyAdmin/@item.Id')">
+                <td> @item.Id </td>
+                <td>
+                    @item.Username
+                </td>
+                <td class="text-end">
+                    <p class="edit">✏</p>
+                </td>
+            </tr>
+            }
+    </table>
+
+    <div class="text-end">
+                        <a asp-controller="Admin" asp-action="ModifyAdmin" class="btn btn-primary">Přidat</a>
+    </div>
+
+    <h2 id="kategorie">Kategorie</h2>
+    <table class="table table-striped table-hover">
+                        <tr class="bg-primary text-white">
+                            <th>Id</th>
+                            <th colspan="2">Cesta</th>
+                        </tr>
+                        @foreach(var item in ViewBag.Categories) {
+            <tr onclick="RedirectTo('./Admin/ModifyCategory/@item.Id')">
+                                <td> @item.Id </td>
+                                <td> @item.CategoryPath </td>
+                                <td class="text-end">
+                                    <p class="edit">✏</p>
+                                </td>
+                            </tr>
+        }
+    </table>
+    <div class="text-end">
+        <a asp-controller="Admin" asp-action="ModifyCategory" class="btn btn-primary">Přidat</a>
+    </div>
+
+    <h2 id="produkty">Produkty</h2>
+    <table class="table table-striped table-hover">
+                        <tr class="bg-primary text-white">
+                            <th>Id</th>
+                            <th colspan="2">Název</th>
+                        </tr>
+                        @foreach (var item in ViewBag.Products)
+        {
+            <tr class="product-item" onclick="RedirectTo('./Admin/ModifyProduct/@item.Id')">
+                                <td> @item.Id </td>
+                                <td> @item.Title </td>
+                                <td class="text-end">
+                                    @*<a asp-controller="Admin" asp-action="ModifyProduct" asp-route-id="@item.Id">*@
+                                        <p class="edit">✏</p>
+                                    @*</a>*@
+                                </td>
+                            </tr>
+        }
+    </table>
+    <div class="text-end">
+        <a asp-controller="Admin" asp-action="ModifyProduct" class="btn btn-primary">Přidat</a>
+    </div>
+}

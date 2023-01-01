@@ -1,0 +1,11 @@
+﻿button.btn.btn-link {
+    text-decoration: none;
+}
+
+.edit {
+    opacity: 0;
+}
+
+tr:hover .edit {
+    opacity: 1;
+}

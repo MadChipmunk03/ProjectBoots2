@@ -1,0 +1,16 @@
+﻿nav {
+    margin: 40px 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+h2 {
+    text-align: center;
+}
+
+.edit {
+    opacity: 0;
+}
+tr:hover .edit {
+    opacity: 1;
+}

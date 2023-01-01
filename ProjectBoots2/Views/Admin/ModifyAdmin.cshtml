@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+}
+@model Administrator
+
+<form asp-controller="Admin" asp-action="ModifyAdmin">
+    <div><input asp-for="Id" hidden class="form-control" /></div>
+
+    <div>
+        <div><label asp-for="Username">Jméno</label></div>
+        <div><input asp-for="Username" class="form-control" /></div>
+        <div><span asp-validation-for="Username"></span></div>
+    </div>
+
+    <div>
+        <div><label asp-for="Password">Nové Heslo</label></div>
+        <div><input asp-for="Password" class="form-control" /></div>
+        <div><span asp-validation-for="Password"></span></div>
+    </div>
+    
+    <div class="text-end">
+        @if(@ViewBag.Admin.Id != 0) {
+            <a asp-controller="Admin" asp-action="DelAdmin" asp-route-id="@ViewBag.Admin.Id">
+                <button type="button" class="btn btn-danger mt-4">Odstranit</button>
+            </a>
+        }
+        <button type="submit" class="btn btn-primary mt-4">Potvrdit</button>
+    </div>
+</form>

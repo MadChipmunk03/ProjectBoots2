@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using ProjectBoots2.Models.structures;
 
 namespace ProjectBoots2.Models.contexts
 {
     public partial class dbBootsContext : DbContext
     {
-        public dbBootsContext()
-        {
-        }
+        //public dbBootsContext()
+        //{
+        //}
 
-        public dbBootsContext(DbContextOptions<dbBootsContext> options)
-            : base(options)
-        {
-        }
+        //public dbBootsContext(DbContextOptions<dbBootsContext> options)
+        //    : base(options)
+        //{
+        //}
 
         public virtual DbSet<Administrator> Administrators { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
@@ -74,7 +73,7 @@ namespace ProjectBoots2.Models.contexts
                     .HasColumnName("parentId");
 
                 entity.HasOne(d => d.Parent)
-                    .WithMany(p => p.InverseParent)
+                    .WithMany(p => p.Children)
                     .HasForeignKey(d => d.ParentId)
                     .HasConstraintName("tbCategories_ibfk_1");
             });

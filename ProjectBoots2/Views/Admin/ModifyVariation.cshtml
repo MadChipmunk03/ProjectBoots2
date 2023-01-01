@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "_LayoutAdmin";
+}
+@model Variation
+
+<form asp-controller="Admin" asp-action="ModifyVariation">
+    <div><input asp-for="Id" hidden class="form-control" /></div>
+    <div><input asp-for="ProductId" hidden class="form-control" /></div>
+    <div><input asp-for="Size" hidden class="form-control" /></div>
+    <div><input asp-for="Color" hidden class="form-control" /></div>
+
+    <h2>@ViewBag.Product.Title</h2>
+    <p>(Velikost: @ViewBag.Variation.Size, Barva: @ViewBag.Variation.Color)</p>
+
+    <div>
+        <div><label asp-for="Price">Cena:</label></div>
+        <div><input asp-for="Price" class="form-control" /></div>
+        <div><span asp-validation-for="Price"></span></div>
+    </div>
+
+    <div>
+        <div><label asp-for="SalePrice">Cena se slevou:</label></div>
+        <div><input asp-for="SalePrice" class="form-control" /></div>
+        <div><span asp-validation-for="SalePrice"></span></div>
+    </div>
+
+    <div>
+        <div><label asp-for="InStock">Množství na skladě:</label></div>
+        <div><input asp-for="InStock" class="form-control" /></div>
+        <div><span asp-validation-for="InStock"></span></div>
+    </div>
+
+    <div class="text-end">
+        <button type="submit" class="btn btn-primary mt-4">Potvrdit</button>
+    </div>
+</form>

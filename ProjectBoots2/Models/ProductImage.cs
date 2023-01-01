@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ProjectBoots2.Models.structures
+namespace ProjectBoots2.Models
 {
     public partial class ProductImage
     {
