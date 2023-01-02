@@ -23,8 +23,7 @@ namespace ProjectBoots2.Controllers.Admin
         [HttpPost]
         public IActionResult ModifyAdmin(Administrator admin)
         {
-            return View();
-            if (this.ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 //hash password input has been set
                 if (admin.Id == 0 || admin.Password != null)
@@ -47,7 +46,7 @@ namespace ProjectBoots2.Controllers.Admin
 
                 return RedirectToAction("Index");
             }
-            return View();
+            return View(admin);
         }
 
         public IActionResult DelAdmin(int id)

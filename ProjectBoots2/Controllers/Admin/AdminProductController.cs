@@ -46,8 +46,15 @@ namespace ProjectBoots2.Controllers.Admin
                 HandleSideRequest(reqStr, productModel.Product);
             else if (ModelState.IsValid)
             {
-                if (productModel.Product.Id == 0) context.Products.Add(productModel.Product);
-                else context.Products.Update(productModel.Product);
+                if (productModel.Product.Id == 0)
+                {
+                    context.Products.Add(productModel.Product);
+                    context.SaveChanges();
+                    context.Variations.Add(new Variation() { ProductId = productModel.Product.Id, Size = 43, Color = "#FF9900" });
+                }
+                else
+                    context.Products.Update(productModel.Product);
+
                 context.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -77,7 +84,7 @@ namespace ProjectBoots2.Controllers.Admin
             return RedirectToAction("Index");
         }
 
-        private void ModifyVariationBase(int id)
+        private void ModifyVariationBase(int? id)
         {
             ViewBag.Product = context.Products
                 .ToList()
@@ -91,7 +98,7 @@ namespace ProjectBoots2.Controllers.Admin
                 .ToList()
                 .First(prd => prd.Id == id);
 
-            ModifyVariationBase(variation.Id);
+            ModifyVariationBase(variation.ProductId);
             ViewBag.Variation = variation;
             return View(variation);
         }

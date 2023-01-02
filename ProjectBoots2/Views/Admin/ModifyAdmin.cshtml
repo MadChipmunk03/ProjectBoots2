@@ -12,11 +12,22 @@
         <div><span asp-validation-for="Username"></span></div>
     </div>
 
+    @if (ViewBag.Admin.Id == 0) @*Is new admin*@
+    {
     <div>
-        <div><label asp-for="Password">Nové Heslo</label></div>
+        <div><label asp-for="Password">Zadejte heslo</label></div>
+        <div><input asp-for="Password" required class="form-control" /></div>
+        <div><span asp-validation-for="Password"></span></div>
+    </div>
+    }
+    else {
+    <div>
+        <div><label asp-for="Password">Nové heslo</label></div>
         <div><input asp-for="Password" class="form-control" /></div>
         <div><span asp-validation-for="Password"></span></div>
     </div>
+    }
+
     
     <div class="text-end">
         @if(@ViewBag.Admin.Id != 0) {

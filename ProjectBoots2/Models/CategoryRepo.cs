@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using ProjectBoots2.Models.contexts;
 
 namespace ProjectBoots2.Models
@@ -19,8 +20,8 @@ namespace ProjectBoots2.Models
         private void AddNodes(Category category, bool isRoot = false)
         {
             List<Category> children = new List<Category>();
-            if (isRoot) children = context.Categories.Where(vrt => vrt.ParentId == null).ToList();
-            else children = context.Categories.Where(vrt => vrt.ParentId == category.Id).ToList();
+            if (isRoot) children = context.Categories.AsNoTracking().Where(vrt => vrt.ParentId == null).ToList();
+            else children = context.Categories.AsNoTracking().Where(vrt => vrt.ParentId == category.Id).ToList();
 
             Categories.Add(category);
 
@@ -32,10 +33,29 @@ namespace ProjectBoots2.Models
             }
         }
 
+        public void Refresh()
+        {
+            Root.Children.Clear();
+            AddNodes(Root, true);
+        }
+
+        public void DelCategory(Category category)
+        {
+            List<Category> children = new List<Category>();
+            children = context.Categories.AsNoTracking().Where(vrt => vrt.ParentId == category.Id).ToList();
+            foreach (Category child in children)
+            {
+                DelCategory(child);
+                context.Remove(child);
+                context.SaveChanges();
+            }
+        }
+
         public List<SelectListItem> GetSelect(Product product)
         {
             return Categories.
-                Select(cat =>
+                Where(cat => cat.CategoryPath != "root")
+                .Select(cat =>
                         new SelectListItem
                         {
                             Value = cat.Id.ToString(),
@@ -49,17 +69,23 @@ namespace ProjectBoots2.Models
         public List<SelectListItem> GetSelect(Category category)
         {
             List<SelectListItem> categories = new List<SelectListItem>();
-            categories = Categories
-                .Where(cat => cat.Id != category.Id)
-                .Select(cat =>
-                        new SelectListItem
-                        {
-                            Value = cat.Id.ToString(),
-                            Text = cat.CategoryPath,
-                            Selected = category.ParentId == cat.Id
-                        }
-                    )
-                .ToList();
+
+            SelectListItem rootItem = new SelectListItem() { Value = null, Text = "root", Selected = false };
+            categories.Add(rootItem);
+
+            categories.AddRange(
+                Categories
+                    .Where(cat => cat.Id != category.Id)
+                    .Select(cat =>
+                            new SelectListItem
+                            {
+                                Value = cat.Id.ToString(),
+                                Text = cat.CategoryPath,
+                                Selected = category.ParentId == cat.Id
+                            }
+                        )
+                    .ToList());
+
             return categories;
         }
     }

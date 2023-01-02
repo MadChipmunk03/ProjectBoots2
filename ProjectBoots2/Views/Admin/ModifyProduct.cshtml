@@ -4,7 +4,10 @@
 @model ProductFormModel
 
 
-<h1 class="text-center">@ViewBag.Product.Title (@ViewBag.Product.Id)</h1>
+@if (ViewBag.Product.Id != 0)
+{
+    <h1 class="text-center">@ViewBag.Product.Title (@ViewBag.Product.Id)</h1>
+}
 <form asp-controller="Admin" asp-action="ModifyProduct" id="mainForm">
     <div><input asp-for="SideRequest" hidden class="form-control" id="Prasarna" /></div>
     <div><input asp-for="Product.Id" hidden class="form-control" /></div>
@@ -104,108 +107,130 @@
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div>
-                <h3>Variace:</h3>
-                <div class="row mb-4">
-                    <div class="col">
-                        <table class="table table-striped">
-                            <tr class="bg-primary text-white">
-                                <th colspan="2">Velikost</th>
-                            </tr>
-                            @foreach (var item in ViewBag.Sizes)
-                            {
-                                <tr>
-                                    <td>@item</td>
-                                    <td class="text-end"><button class="btn btn-link" type="button" onclick="DelSizeFunc(@item)">❌</button></td>
-                                </tr>
-                            }
-                        </table>
-                        <script>
-                            function DelSizeFunc(size) {
-                                document.getElementById("Prasarna").value = `SizeDel;${size}`;
-                                document.getElementById("mainForm").submit();
-                            }
-                        </script>
-                        <div style="display: flex">
-                            <div style="flex-grow: 1"><input placeholder="Zadejte velikost..." id="newSize" type="number" class="form-control" /></div>
-                            <div class="ms-4"><button class="btn btn-primary" type="button" onclick="AddSizeFunc()">Přidat</button></div>
-                            <script>
-                                function AddSizeFunc() {
-                                    const sizeValue = document.getElementById("newSize").value;
-                                    document.getElementById("Prasarna").value = `SizeAdd;${sizeValue}`;
-                                    document.getElementById("mainForm").submit();
-                                }
-                            </script>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <table class="table table-striped">
-                            <tr class="bg-primary text-white">
-                                <th colspan="2">Barva</th>
-                            </tr>
-                            @foreach (var item in ViewBag.Colors)
-                            {
-                                <tr>
-                                    <td>@item</td>
-                                    <td class="text-end"><button class="btn btn-link" type="button" onclick="DelColorFunc('@item')">❌</button></td>
-                                </tr>
-                            }
-                        </table>
-                        <script>
-                            function DelColorFunc(color) {
-                                console.log(color);
-                                document.getElementById("Prasarna").value = `ColorDel;${color}`;
-                                document.getElementById("mainForm").submit();
-                            }
-                        </script>
-                        <div style="display: flex">
-                            <div style="flex-grow: 1"><input id="newColor" style="box-sizing: border-box; height: 38px;" type="color" class="form-control" /></div>
-                            <div class="ms-4"><button class="btn btn-primary" type="button" onclick="AddColorFunc()">Přidat</button></div>
-                            <script>
-                                function AddColorFunc() {
-                                    const colorValue = document.getElementById("newColor").value;
-                                    document.getElementById("Prasarna").value = `ColorAdd;${colorValue}`;
-                                    document.getElementById("mainForm").submit();
-                                }
-                            </script>
-                        </div>
-                    </div>
-                </div>
+        @if(@ViewBag.Product.Id != 0) {
 
+            <div class="col">
                 <div>
-                    <link href="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.css" rel="stylesheet">
-
-                    <script src="https://unpkg.com/bootstrap-table@1.21.2/dist/bootstrap-table.min.js"></script>
-                    <script src="https://unpkg.com/bootstrap-table@1.21.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
-
-                    <table id="variationTable" class="table table-striped">
-                        <thead>
-                            <tr class="bg-primary text-white">
-                                <th>Id</th>
-                                <th>Velikost</th>
-                                <th colspan="2">Barva</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in ViewBag.Variations)
-                            {
-                                <tr>
-                                    <td>@item.Id</td>
-                                    <td>@item.Size</td>
-                                    <td>@item.Color</td>
-                                    <td class="text-end">
-                                        <a asp-controller="Admin" asp-action="ModifyVariation" asp-route-id="@item.Id">
-                                            <p class="edit">✏</p>
-                                        </a>
-                                    </td>
+                    <h3>Variace:</h3>
+                    <div class="row mb-4">
+                        <div class="col">
+                            <table class="table table-striped">
+                                <tr class="bg-primary text-white">
+                                    <th colspan="2">Velikost</th>
                                 </tr>
+                                @foreach (var item in ViewBag.Sizes)
+                                {
+                                    <tr>
+                                        <td>@item</td>
+                                        <td class="text-end"><button class="btn btn-link" type="button" onclick="DelSizeFunc(@item)">❌</button></td>
+                                    </tr>
+                                }
+                            </table>
+                            <script>
+                                function DelSizeFunc(size) {
+                                    document.getElementById("Prasarna").value = `SizeDel;${size}`;
+                                    document.getElementById("mainForm").submit();
+                                }
+                            </script>
+                            <div style="display: flex">
+                                <div style="flex-grow: 1"><input placeholder="Zadejte velikost..." id="newSize" type="number" class="form-control" /></div>
+                                <div class="ms-4"><button class="btn btn-primary" type="button" onclick="AddSizeFunc()">Přidat</button></div>
+                                <script>
+                                    function AddSizeFunc() {
+                                        const sizeValue = document.getElementById("newSize").value;
+                                        document.getElementById("Prasarna").value = `SizeAdd;${sizeValue}`;
+                                        document.getElementById("mainForm").submit();
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <table class="table table-striped">
+                                <tr class="bg-primary text-white">
+                                    <th colspan="2">Barva</th>
+                                </tr>
+                                @foreach (var item in ViewBag.Colors)
+                                {
+                                    <tr>
+                                        <td>@item</td>
+                                        <td class="text-end"><button class="btn btn-link" type="button" onclick="DelColorFunc('@item')">❌</button></td>
+                                    </tr>
+                                }
+                            </table>
+                            <script>
+                                function DelColorFunc(color) {
+                                    console.log(color);
+                                    document.getElementById("Prasarna").value = `ColorDel;${color}`;
+                                    document.getElementById("mainForm").submit();
+                                }
+                            </script>
+                            <div style="display: flex">
+                                <div style="flex-grow: 1"><input id="newColor" style="box-sizing: border-box; height: 38px;" type="color" class="form-control" /></div>
+                                <div class="ms-4"><button class="btn btn-primary" type="button" onclick="AddColorFunc()">Přidat</button></div>
+                                <script>
+                                    function AddColorFunc() {
+                                        const colorValue = document.getElementById("newColor").value;
+                                        document.getElementById("Prasarna").value = `ColorAdd;${colorValue}`;
+                                        document.getElementById("mainForm").submit();
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <input type="text" id="searchInput" onkeyup="searchVariations()" placeholder="Vyhledej variaci..." class="form-control">
+                        <table id="variationTable" class="table table-striped">
+                            <thead>
+                                <tr class="bg-primary text-white">
+                                    <th>Id</th>
+                                    <th>Velikost</th>
+                                    <th colspan="2">Barva</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.Variations)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.Size</td>
+                                        <td>@item.Color</td>
+                                        <td class="text-end">
+                                            <a asp-controller="Admin" asp-action="ModifyVariation" asp-route-id="@item.Id">
+                                                <p class="edit">✏</p>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <script>
+                            function searchVariations() {
+                                var input, filter, table, tr, td, i, txtValue;
+                                input = document.getElementById("searchInput");
+                                filter = input.value.toUpperCase();
+                                table = document.getElementById("variationTable");
+                                tr = table.getElementsByTagName("tr");
+                                for (i = 1; i < tr.length; i++) {
+                                    tds = tr[i].getElementsByTagName("td");
+                                    let trDisplay = "";
+                                    tr[i].style.display = "none"
+                                    for (const td of tds) {
+                                        if (td) {
+                                            txtValue = td.textContent || td.innerText;
+                                            console.log(txtValue);
+                                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                tr[i].style.display = "";
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                        </tbody>
-                    </table>
+                        </script>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
 
     <div class="text-end">
