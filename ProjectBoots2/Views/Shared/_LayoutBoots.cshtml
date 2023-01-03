@@ -3,47 +3,150 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ProjectBoots2</title>
+    <title>@ViewData["Title"] - Boty.cz</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/GlobalStyle.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/FooterStyle.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/HeaderStyle.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/CssVariables.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ProjectBoots2.styles.css" asp-append-version="true" />
 </head>
 <body>
+    <header class="mobile-hidden"><div>&nbsp</div></header>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ProjectBoots2</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
-                        </li>
+        <section class="top">
+            <img src="../img/8.svg" alt="contact icon" class="contact-icon">
+            <a href="tel:+420777666555" class="phone-number">
+                <span class="phone-prefix">+420 </span>777 666 555
+            </a>
+            <p class="divider">|</p>
+            <a href="mailto:info@nejlepsiboty.cz" class="mail">info@nejlepsiboty.cz</a>
+            <img src="../img/profile-user.svg" alt="profile icon" class="profile-icon">
+            <a href="" class="sign-in">Přihlásit se</a>
+        </section>
+
+        <aside>
+            <header>
+                <a href="HomeIndex.html">
+                    <img src="../img/Group%204.svg" alt="Boty logo" class="boty-logo">
+                </a>
+                <div class="search-input">
+                    <img src="../img/loupe.svg" height="16" alt="search icon">
+                    <form action="search.php" id="search-form">
+                        <input type="search" name="search" placeholder="Vyhledat zboží..." class="search-input">
+                    </form>
+                    <script>
+                        const node = document.getElementsByClassName("search-input")[0];
+                        node.addEventListener("keyup", ({key}) => {
+                            if (key === "Enter") {
+                                document.getElementById("search-form").submit();
+                            }
+                        })
+                    </script>
+                </div>
+                <img src="../img/loupe.svg" alt="search icon" class="search-icon">
+                <a href="DemandIndex.html">
+                    <img src="../img/Group%206.png" alt="basket icon" class="basket-icon">
+                </a>
+                <img src="../img/heart.svg" alt="favorite icon" class="fav-icon">
+            </header>
+            <nav>
+                <a href="">
+                    <div>
+                        Chlapecké
+                        <img src="../img/Group%20169.svg" alt="man icon" class="man-icon">
+                    </div>
+                </a>
+                <a href="">
+                    <div>
+                        Dívčí
+                        <img src="../img/Group%20171.svg" alt="man icon" class="woman-icon">
+                    </div>
+                </a>
+                <a href=""><div>Doplňky</div></a>
+                <a href=""><div>Ostatní</div></a>
+                <a href=""><div class="contact">Kontakt</div></a>
+            </nav>
+        </aside>
+    </header>
+    <header class="mobile-hidden"><div>&nbsp</div></header>
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
+    
+    <footer>
+        <section class="subscribtion">
+            <form action="newsletter.php">
+                <h2>Nezmeškejte nové výhodné akce</h2>
+                <p>Zadejte svůj e-mail a obratem vám zašleme PDF s inpirací zdarma.</p>
+                <div>
+                    <img src="../img/6.svg" alt="e-mail icon">
+                    <input type="email" name="email" placeholder="Zadej svůj mail..." required>
+                    <button class="primary-button" type="submit">Přihlásit</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="bottom">
+            <div class="right">
+                <h3 class="about-title">O nás</h3>
+                <p class="about-descriptio">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A adipisci autem fuga minima molestias mollitia perspiciatis, veniam vero? Accusantium amet earum eligendi eum ipsam ipsum pariatur, velit. Adipisci, aliquid odio?</p>
+                <h3 class="links-title">Naše nabídka</h3>
+                <div class="links-girls">
+                    <h4><a href="">Dívčí</a></h4>
+                    <ul>
+                        <li><a href="">Tenisky</a></li>
+                        <li><a href="">Holinky</a></li>
+                        <li><a href="">Sandály</a></li>
+                        <li><a href="">Baleríny</a></li>
+                        <li><a href="">Polobotky</a></li>
                     </ul>
                 </div>
+                <div class="links-boys">
+                    <h4><a href="">Chlapecké</a></h4>
+                    <ul>
+                        <li><a href="">Tenisky</a></li>
+                        <li><a href="">Holinky</a></li>
+                        <li><a href="">Sandály</a></li>
+                        <li><a href="">Baleríny</a></li>
+                        <li><a href="">Polobotky</a></li>
+                    </ul>
+                </div>
+                <a href="HomeIndex.html">
+                    <img src="../img/Group%204.svg" alt="boty logo" class="logo">
+                </a>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - ProjectBoots2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+            <div class="left">
+                <h4>Kontaktujte nás</h4>
+                <div>
+                    <a href="mailto:info@nejlepsiboty.cz">
+                        <img src="../img/6.svg" alt="mail icon">
+                        info@nejlepsiboty.cz
+                    </a>
+                </div>
+                <div>
+                    <a href="tel:+420777666555">
+                        <img src="../img/8.svg" alt="phone icon">
+                        +420 777 666 555
+                    </a>
+                </div>
+                <div>
+                    <a href=""><img src="../img/facebook.png" alt="facebook icon"></a>
+                    <a href=""><img src="../img/Group%20153.svg" alt="instagram icon"></a>
+                    <a href=""><img src="../img/twitter.svg" alt="twitter icon"></a>
+                </div>
+                <address>
+                    <a href="http://maps.google.com/?q=1200 Litvínovská 600, Praha 9, 190 00">
+                        Litvínovská 600, Praha 9, 190 00
+                    </a>
+                </address>
+            </div>
+        </section>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" type="text/css" href="extensions/filter-control/bootstrap-table-filter-control.css">

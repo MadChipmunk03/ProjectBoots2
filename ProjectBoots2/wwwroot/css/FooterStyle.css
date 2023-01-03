@@ -1,0 +1,139 @@
+﻿@import "CssVariables.css";
+
+body > footer a:hover {
+    text-decoration: underline;
+}
+
+body > footer > section.subscribtion {
+    background: url("../img/Vrstva 9.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-x: hidden;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+body > footer > .subscribtion form {
+    padding: 20px;
+}
+
+body > footer > section.subscribtion div {
+    background-color: white;
+    border: 1px solid gray;
+    width: max-content;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body > footer > section.subscribtion img {
+    filter: brightness(75%);
+    margin: 0 10px;
+}
+
+body > footer > section.subscribtion input[type="email"] {
+    border: none;
+    width: 200px;
+    color: var(--custom-gray);
+}
+
+body > footer > section.bottom {
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 350px;
+}
+
+/* right (red) side */
+
+body > footer div.right {
+    padding: 30px;
+    background-color: var(--primary-color);
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: "about-title links-title links-title"
+        "about-description links-girls links-boys"
+        "logo logo logo";
+}
+
+body > footer .about-title {
+    grid-area: about-title;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+body > footer .links-title {
+    grid-area: links-title;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+body > footer .about-descriptio {
+    grid-area: about-description;
+    margin-right: 60px;
+}
+
+body > footer .links-girls {
+    grid-area: links-girls;
+}
+
+body > footer .links-boys {
+    grid-area: links-boys;
+}
+
+body > footer .logo {
+    grid-area: logo;
+    margin-top: 30px;
+    filter: brightness(0) invert(1);
+}
+
+body > footer ul {
+    list-style-type: circle;
+}
+
+/* left (blue) side */
+
+body > footer div.left {
+    background-color: var(--secondary-color);
+    padding: 20px 20px 60px 20px;
+}
+
+    body > footer div.left h4 {
+        text-transform: uppercase;
+    }
+
+    body > footer div.left img {
+        margin: 0 5px;
+    }
+
+    body > footer div.left div {
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+    }
+
+    body > footer div.left address {
+        margin-top: 20px;
+    }
+
+/* MOBILE */
+@media (max-width: 500px) {
+    body > footer > section.bottom {
+        display: block;
+    }
+
+    body > footer div.right {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: auto;
+        grid-template-areas: "about-title about-title"
+            "about-description about-description"
+            "logo logo"
+            "links-title links-title"
+            "links-girls links-boys";
+    }
+}
