@@ -70,42 +70,45 @@
                 </div>
             </div>
 
-            <div class="mb-4">
-                <h3>Obrázky</h3>
-                <table class="table table-striped">
-                    <tr class="bg-primary text-white">
-                        <th>Id</th>
-                        <th colspan="2">Url</th>
-                    </tr>
-                    @foreach (var item in ViewBag.Product.ProductImages)
-                    {
-                        <tr>
-                            <td>@item.Id</td>
-                            <td><a href="@item.Url" target="_blank">@item.Url</a></td>
-                            <td>
-                                <button class="btn btn-link" type="button" onclick="DelImgFunc(@item.Id)">❌</button>
-                            </td>
+            @if (@ViewBag.Product.Id != 0)
+            {
+                <div class="mb-4">
+                    <h3>Obrázky</h3>
+                    <table class="table table-striped">
+                        <tr class="bg-primary text-white">
+                            <th>Id</th>
+                            <th colspan="2">Url</th>
                         </tr>
-                    }
-                </table>
-                <script>
-                    function DelImgFunc(imgId) {
-                        document.getElementById("Prasarna").value = `ImgDel;${imgId}`;
-                        document.getElementById("mainForm").submit();
-                    }
-                </script>
-                <div style="display: flex">
-                    <div style="flex-grow: 1"><input id="imgUrl" type="url" placeholder="Zadejte url obrázku..." class="form-control" /></div>
-                    <div class="ms-4"><button class="btn btn-primary" type="button" onclick="AddImgFunc()">Přidat</button></div>
+                        @foreach (var item in ViewBag.Product.ProductImages)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td><a href="@item.Url" target="_blank">@item.Url</a></td>
+                                <td>
+                                    <button class="btn btn-link" type="button" onclick="DelImgFunc(@item.Id)">❌</button>
+                                </td>
+                            </tr>
+                        }
+                    </table>
                     <script>
-                        function AddImgFunc() {
-                            const urlValue = document.getElementById("imgUrl").value;
-                            document.getElementById("Prasarna").value = `ImgAdd;${urlValue}`;
+                        function DelImgFunc(imgId) {
+                            document.getElementById("Prasarna").value = `ImgDel;${imgId}`;
                             document.getElementById("mainForm").submit();
                         }
                     </script>
+                    <div style="display: flex">
+                        <div style="flex-grow: 1"><input id="imgUrl" type="url" placeholder="Zadejte url obrázku..." class="form-control" /></div>
+                        <div class="ms-4"><button class="btn btn-primary" type="button" onclick="AddImgFunc()">Přidat</button></div>
+                        <script>
+                            function AddImgFunc() {
+                                const urlValue = document.getElementById("imgUrl").value;
+                                document.getElementById("Prasarna").value = `ImgAdd;${urlValue}`;
+                                document.getElementById("mainForm").submit();
+                            }
+                        </script>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
         @if(@ViewBag.Product.Id != 0) {
 
@@ -122,7 +125,10 @@
                                 {
                                     <tr>
                                         <td>@item</td>
-                                        <td class="text-end"><button class="btn btn-link" type="button" onclick="DelSizeFunc(@item)">❌</button></td>
+                                        @if (ViewBag.Sizes.Length > 1) 
+                                        {
+                                            <td class="text-end"><button class="btn btn-link" type="button" onclick="DelSizeFunc(@item)">❌</button></td>
+                                        }
                                     </tr>
                                 }
                             </table>
@@ -153,7 +159,10 @@
                                 {
                                     <tr>
                                         <td>@item</td>
-                                        <td class="text-end"><button class="btn btn-link" type="button" onclick="DelColorFunc('@item')">❌</button></td>
+                                        @if (ViewBag.Colors.Length > 1) 
+                                        {
+                                            <td class="text-end"><button class="btn btn-link" type="button" onclick="DelColorFunc('@item')">❌</button></td>
+                                        }
                                     </tr>
                                 }
                             </table>
