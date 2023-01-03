@@ -1,7 +1,11 @@
 ﻿@import "CssVariables.css";
 
+body > header p {
+    margin-bottom: 0;
+}
+
 body > :is(header:first-child, header:nth-child(3)) > div {
-    height: 60px;
+    height: 40px;
     background-color: var(--secondary-color);
 }
 
@@ -15,22 +19,22 @@ body > header .top {
     background-color: var(--secondary-color);
 }
 
-    body > header .top a:hover {
-        text-decoration: underline;
-    }
+body > header .top a:hover {
+    text-decoration: underline;
+}
 
-    body > header .top :is(img.contact-icon, img.profile-icon) {
-        margin: 0px 10px;
-        cursor: pointer;
-    }
+body > header .top :is(img.contact-icon, img.profile-icon) {
+    margin: 0px 10px;
+    cursor: pointer;
+}
 
-    body > header .top .divider {
-        padding: 0 10px;
-    }
+body > header .top .divider {
+    padding: 0 10px;
+}
 
-    body > header .top img.profile-icon {
-        margin-left: auto;
-    }
+body > header .top img.profile-icon {
+    margin-left: auto;
+}
 
 /* aside */
 body > header > aside {
@@ -39,60 +43,60 @@ body > header > aside {
     padding: 0 20px;
 }
 
-    body > header > aside header {
-        display: flex;
-        align-items: center;
-        justify-items: center;
-        margin: 20px 0;
-    }
+body > header > aside header {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    margin: 20px 0;
+}
 
-        body > header > aside header a:first-child {
-            margin-right: auto;
-        }
+body > header > aside header a:first-child {
+    margin-right: auto;
+}
 
-    body > header > aside input[type="search"] {
-        border: none;
-        color: var(--custom-gray);
-    }
+body > header > aside input[type="search"] {
+    border: none;
+    color: var(--custom-gray);
+}
 
-    body > header > aside div.search-input {
-        border: 1px solid var(--custom-gray);
-        padding: 2px;
-        display: flex;
-        align-items: center;
-        justify-items: center;
-        padding: 4px;
-    }
+body > header > aside div.search-input {
+    border: 1px solid var(--custom-gray);
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    padding: 4px;
+}
 
-    body > header > aside :is(img.search-icon, img.basket-icon, img.fav-icon) {
-        margin-left: 10px;
-        cursor: pointer;
-    }
+body > header > aside :is(img.search-icon, img.basket-icon, img.fav-icon) {
+    margin-left: 10px;
+    cursor: pointer;
+}
 
-    body > header > aside nav {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    }
+body > header > aside nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
 
-        body > header > aside nav div {
-            padding: 20px;
-            border: 1px solid gray;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 25px;
-        }
+body > header > aside nav div {
+    padding: 20px;
+    border: 1px solid gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 25px;
+}
 
-    body > header > aside :is(img.man-icon, img.woman-icon) {
-        margin-left: 5px;
-    }
+body > header > aside :is(img.man-icon, img.woman-icon) {
+    margin-left: 5px;
+}
 
-    body > header > aside nav div:hover {
-        color: var(--primary-color);
-        border-color: var(--primary-color);
-        font-weight: bold;
-        cursor: pointer;
-    }
+body > header > aside nav div:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    font-weight: bold;
+    cursor: pointer;
+}
 
 /* MOBILE */
 @media (max-width: 500px) {
@@ -112,16 +116,16 @@ body > header > aside {
         padding: 0 10px;
     }
 
-        body > header > aside div.search-input {
-            display: none;
-        }
+    body > header > aside div.search-input {
+        display: none;
+    }
 
-        body > header > aside nav {
-            grid-template-columns: 1fr 1fr;
-            grid-auto-rows: auto;
-        }
+    body > header > aside nav {
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: auto;
+    }
 
-        body > header > aside div.contact {
-            display: none;
-        }
+    body > header > aside div.contact {
+        display: none;
+    }
 }

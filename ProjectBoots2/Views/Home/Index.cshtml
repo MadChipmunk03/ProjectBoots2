@@ -41,94 +41,20 @@ ViewData["Title"] = "Home ";
 <section class="newest-items">
     <h2 class="custom-header">Nejnovější kousky <span>v naší nabídce</span></h2>
     <section class="offers">
-        <div>
-            <a href="ProductIndex.html">
-                <img src="../img2/bota1.png" width="100%" alt="boty1 image">
-                <h3>Papučky barefoot hnědé kožené</h3>
-                <p class="current-price">529 Kč</p>
-                <p class="old-price">699 Kč</p>
-                <a href="DemandIndex.html">
-                    <img src="../img/Group%206.png" alt="basket icon" class="basket-icon">
+        @*<vc:ProductCard product="ViewBag.Product"></vc:ProductCard>*@
+        @foreach(var product in ViewBag.Products) {
+            <div>
+                <a href="ProductIndex.html">
+                    <img src="@product.ProductImages[0].Url" width="100%" alt="boty1 image">
+                    <h3>@product.Title</h3>
+                    <p class="current-price">529 Kč</p>
+                    <p class="old-price">699 Kč</p>
+                    <a href="DemandIndex.html">
+                        <img src="../img/Group%206.png" alt="basket icon" class="basket-icon">
+                    </a>
                 </a>
-            </a>
-        </div>
-        <div>
-            <a href="ProductIndex.html">
-                <img src="../img2/boty%20(6).png" width="100%" alt="boty1 image">
-                <h3>Papučky barefoot růžové</h3>
-                <p class="current-price">529 Kč</p>
-                <p class="old-price">699 Kč</p>
-                <a href="DemandIndex.html">
-                    <img src="../img/Group%206.png" alt="basket icon" class="basket-icon">
-                </a>
-            </a>
-        </div>
-        <div>
-            <a href="ProductIndex.html">
-                <img src="../img2/boty%20(2).png" width="100%" alt="boty1 image">
-                <h3>Sandálky modré umělé</h3>
-                <p class="current-price">529 Kč</p>
-                <p class="old-price">699 Kč</p>
-                <a href="DemandIndex.html">
-                    <img src="../img/Group%206.png" alt="basket icon" class="basket-icon">
-                </a>
-            </a>
-        </div>
-        <div>
-            <a href="ProductIndex.html">
-                <img src="../img2/boty%20(8).png" width="100%" alt="boty1 image">
-                <h3>Netlačící boty s vysokou špičkou</h3>
-                <p class="current-price">529 Kč</p>
-                <p class="old-price">699 Kč</p>
-                <a href="DemandIndex.html">
-                    <img src="../img/Group%206.png" alt="basket icon" class="basket-icon">
-                </a>
-            </a>
-        </div>
-        <div>
-            <a href="ProductIndex.html">
-                <img src="../img2/bota1.png" width="100%" alt="boty1 image">
-                <h3>Papučky barefoot hnědé kožené</h3>
-                <p class="current-price">529 Kč</p>
-                <p class="old-price">699 Kč</p>
-                <a href="DemandIndex.html">
-                    <img src="../img/Group%206.png" alt="basket icon" class="basket-icon">
-                </a>
-            </a>
-        </div>
-        <div>
-            <a href="ProductIndex.html">
-                <img src="../img2/bota1.png" width="100%" alt="boty1 image">
-                <h3>Papučky barefoot hnědé kožené</h3>
-                <p class="current-price">529 Kč</p>
-                <p class="old-price">699 Kč</p>
-                <a href="DemandIndex.html">
-                    <img src="../img/Group%206.png" alt="basket icon" class="basket-icon">
-                </a>
-            </a>
-        </div>
-        <div>
-            <a href="ProductIndex.html">
-                <img src="../img2/boty%20(2).png" width="100%" alt="boty1 image">
-                <h3>Sandálky modré umělé</h3>
-                <p class="current-price">529 Kč</p>
-                <p class="old-price">699 Kč</p>
-                <a href="DemandIndex.html">
-                    <img src="../img/Group%206.png" alt="basket icon" class="basket-icon">
-                </a>
-            </a>
-        </div>
-        <div>
-            <a href="ProductIndex.html">
-                <img src="../img2/boty%20(8).png" width="100%" alt="boty1 image">
-                <h3>Netlačící boty s vysokou špičkou</h3>
-                <p class="current-price">529 Kč</p>
-                <p class="old-price">699 Kč</p>
-                <a href="DemandIndex.html">
-                    <img src="../img/Group%206.png" alt="basket icon" class="basket-icon">
-                </a>
-            </a>
-        </div>
+            </div>
+        }
     </section>
     <button class="primary-button">Zobrazit celou nabídku</button>
 </section>
