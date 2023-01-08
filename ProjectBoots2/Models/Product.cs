@@ -7,12 +7,6 @@ namespace ProjectBoots2.Models
 {
     public partial class Product
     {
-        public Product()
-        {
-            ProductImages = new HashSet<ProductImage>();
-            Variations = new HashSet<Variation>();
-        }
-
         public int Id { get; set; }
         public int? CategoryId { get; set; }
 
@@ -37,7 +31,7 @@ namespace ProjectBoots2.Models
         public string? ParamCode { get; set; }
 
         public virtual Category? Category { get; set; }
-        public virtual ICollection<ProductImage> ProductImages { get; set; }
-        public virtual ICollection<Variation> Variations { get; set; }
+        public virtual IList<ProductImage> ProductImages { get; set; }
+        public virtual IList<Variation> Variations { get; set; }
     }
 }

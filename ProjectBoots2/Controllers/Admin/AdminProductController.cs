@@ -94,9 +94,7 @@ namespace ProjectBoots2.Controllers.Admin
         [HttpGet]
         public IActionResult ModifyVariation(int id)
         {
-            Variation variation = context.Variations
-                .ToList()
-                .First(prd => prd.Id == id);
+            Variation variation = context.Variations.First(prd => prd.Id == id);
 
             ModifyVariationBase(variation.ProductId);
             ViewBag.Variation = variation;

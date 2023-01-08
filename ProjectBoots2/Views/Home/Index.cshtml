@@ -44,14 +44,16 @@ ViewData["Title"] = "Home ";
         @*<vc:ProductCard product="ViewBag.Product"></vc:ProductCard>*@
         @foreach(var product in ViewBag.Products) {
             <div>
-                <a href="ProductIndex.html">
+                    <a asp-controller="Product" asp-action="Index" asp-route-vrtId="@product.Variations[0].Id">
                     <img src="@product.ProductImages[0].Url" width="100%" alt="boty1 image">
-                    <h3>@product.Title</h3>
-                    <p class="current-price">529 Kč</p>
-                    <p class="old-price">699 Kč</p>
-                    <a href="DemandIndex.html">
-                        <img src="../img/Group%206.png" alt="basket icon" class="basket-icon">
-                    </a>
+                    <div>
+                        <h3>@product.Title</h3>
+                        <p class="current-price">@product.Variations[0].SalePrice Kč</p>
+                        <p class="old-price">@product.Variations[0].Price Kč</p>
+                        <a href="DemandIndex.html">
+                            <img src="../img/Group%206.png" alt="basket icon" class="basket-icon">
+                        </a>
+                    </div>
                 </a>
             </div>
         }

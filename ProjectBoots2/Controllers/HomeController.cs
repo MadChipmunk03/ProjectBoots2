@@ -13,6 +13,11 @@ namespace ProjectBoots2.Controllers
         {
             List<Product> products = context.Products.ToList();
             products = showAll ? products : products.GetRange(0, 8);
+            products.ForEach(prd =>
+            {
+                Variation variation = context.Variations.First(vrt => vrt.ProductId == prd.Id);
+                prd.Variations.Add(variation);
+            });
 
             List<ProductImage> images = context.ProductImages.ToList();
 

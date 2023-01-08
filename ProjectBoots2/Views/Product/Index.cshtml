@@ -1,0 +1,203 @@
+﻿@{
+    ViewData["Title"] = "Product ";
+}
+
+<section class="category-path">
+    <a href="HomeIndex.html">Domů ></a>
+    <a href="">Dívčí boty ></a>
+    <a href="">Tenisky</a>
+</section>
+
+<section class="product-main">
+    <section class="product-images">
+        <img src="@ViewBag.Product.ProductImages[0].Url" alt="bota image" class="product-image-main">
+        @foreach (var image in ViewBag.Images)
+        {
+            <picture>
+                <img src="@image.Url" id="img_@image.Id" alt="bota image">
+                <div onclick="changeMainImg('@image.Url')" class="hover-overlay">&nbsp</div>
+            </picture>
+        }
+        <script>
+            function changeMainImg(src) {
+                const mainImg = document.getElementsByClassName("product-image-main")[0];
+                mainImg.setAttribute('src', src);
+            }
+        </script>
+    </section>
+    <section class="product-options">
+        <div class="header">
+            <h2>@ViewBag.Product.Title</h2>
+            <img src="~/img2/logo.webp" alt="logo" width="100%">
+        </div>
+        <div class="description">
+            @ViewBag.Product.Description
+        </div>
+        <hr>
+        <section class="options-half options-half-first">
+            <div class="colors">
+                <h4>Barva</h4>
+                @foreach (string color in ViewBag.Colors)
+                {
+                    <a asp-controller="Product" asp-action="Index" asp-route-productId="@ViewBag.Product.Id" asp-route-size="@ViewBag.Variation.Size" asp-route-color="@color">
+                        <div style="background-color: @color;" class="@(ViewBag.Variation.Color == color ? "active" : "")"></div>
+                    </a>
+                }
+            </div>
+            <div class="size">
+                <h4>Velikost</h4>
+                @*active, out-of-stock*@
+                @foreach(int size in ViewBag.Sizes) {
+                    <a asp-controller="Product" asp-action="Index" asp-route-productId="@ViewBag.Product.Id" asp-route-size="@size" asp-route-color="@ViewBag.Variation.Color">
+                        <p class="@(ViewBag.Variation.Size == size ? "active" : "")">@size</p>
+                    </a>
+                }
+            </div>
+        </section>
+        <hr>
+        <section class="options-half">
+            <div class="order-detail">
+                <h2>Skladem</h2>
+                @if (@ViewBag.Variation.SalePrice != null && @ViewBag.Variation.SalePrice != 0 && @ViewBag.Variation.SalePrice < @ViewBag.Variation.Price)
+                {
+                    <p class="old-price">@ViewBag.Variation.Price Kč</p>
+                    <p class="current-price">@ViewBag.Variation.SalePrice Kč</p>
+                }
+                else
+                {
+                    <p class="current-price">@ViewBag.Variation.Price Kč</p>
+                }
+            </div>
+            <div class="order-btn">
+                <button class="primary-button" onclick="location.href='DemandIndex.html'">
+                    <img src="~/img/Group%206.png" alt="basket icon">
+                    <p>Přidat do košiku</p>
+                </button>
+            </div>
+        </section>
+    </section>
+    <section class="product-info">
+        <div class="text">
+            <h3>Informace o produktu</h3>
+            <p>@ViewBag.Product.Description</p>
+            <h4>Sed quia consequuntur</h4>
+            <p>magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+            <p> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat? Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur?</p>
+        </div>
+        <div class="table">
+            <table>
+                <tr>
+                    <th colspan="2">parametry produktu</th>
+                </tr>
+                <tr>
+                    <td>Barva</td>
+                    <td>@ViewBag.Variation.Color</td>
+                </tr>
+                <tr>
+                    <td>Druh</td>
+                    <td>@ViewBag.Product.ParamType</td>
+                </tr>
+                <tr>
+                    <td>Materiál</td>
+                    <td>@ViewBag.Product.ParamMaterial</td>
+                </tr>
+                <tr>
+                    <td>Určení</td>
+                    <td>@ViewBag.Product.ParamPurpose</td>
+                </tr>
+                <tr>
+                    <td>Kód</td>
+                    <td>@ViewBag.Product.ParamCode</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+</section>
+
+
+<div class="divider mobile-hidden">
+    <hr>
+    <img src="~/img/Group%20295.svg" alt="divider img">
+</div>
+
+<section class="suggestions">
+    <h2 class="custom-header">Mohlo by se <span>Vám líbit</span></h2>
+    <section class="offers">
+        <div>
+            <a href="ProductIndex.html">
+                <img src="~/img2/bota1.png" width="100%" alt="boty1 image">
+                <h3>Papučky barefoot hnědé kožené</h3>
+                <p class="current-price">529 Kč</p>
+                <p class="old-price">699 Kč</p>
+                <a href="DemandIndex.html">
+                    <img src="~/img/Group%206.png" alt="basket icon" class="basket-icon">
+                </a>
+            </a>
+        </div>
+        <div>
+            <a href="ProductIndex.html">
+                <img src="~/img2/boty%20(6).png" width="100%" alt="boty1 image">
+                <h3>Papučky barefoot růžové</h3>
+                <p class="current-price">529 Kč</p>
+                <p class="old-price">699 Kč</p>
+                <a href="DemandIndex.html">
+                    <img src="~/img/Group%206.png" alt="basket icon" class="basket-icon">
+                </a>
+            </a>
+        </div>
+        <div>
+            <a href="ProductIndex.html">
+                <img src="~/img2/boty%20(2).png" width="100%" alt="boty1 image">
+                <h3>Sandálky modré umělé</h3>
+                <p class="current-price">529 Kč</p>
+                <p class="old-price">699 Kč</p>
+                <a href="DemandIndex.html">
+                    <img src="~/img/Group%206.png" alt="basket icon" class="basket-icon">
+                </a>
+            </a>
+        </div>
+        <div>
+            <a href="ProductIndex.html">
+                <img src="~/img2/boty%20(8).png" width="100%" alt="boty1 image">
+                <h3>Netlačící boty s vysokou špičkou</h3>
+                <p class="current-price">529 Kč</p>
+                <p class="old-price">699 Kč</p>
+                <a href="DemandIndex.html">
+                    <img src="~/img/Group%206.png" alt="basket icon" class="basket-icon">
+                </a>
+            </a>
+        </div>
+    </section>
+</section>
+
+<div class="divider">
+    <hr>
+    <img src="~/img/Group%20295.svg" alt="divider img">
+</div>
+
+<section class="see-also">
+    <a href="">
+        <div>
+            <span>
+                <img src="~/img/Group%20195.svg" alt="warehouse icon">
+            </span>
+            <p>Vše máme skladem</p>
+        </div>
+    </a>
+    <a href="">
+        <div>
+            <span>
+                <img src="~/img/Group%20196.svg" alt="warehouse icon">
+            </span>
+            <p>Doprava zdarma</p>
+        </div>
+    </a>
+    <a href="">
+        <div>
+            <span>
+                <img src="~/img/Group%20293.svg" alt="warehouse icon">
+            </span>
+            <p>Jak měřit velikost</p>
+        </div>
+    </a>
+</section>

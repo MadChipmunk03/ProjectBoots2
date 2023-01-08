@@ -91,18 +91,24 @@ section.newest-items .offers h3 {
     font-weight: normal;
 }
 
-section.newest-items .offers div {
+section.newest-items .offers > div {
     border: 1px solid lightgray;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
-    section.newest-items .offers div:hover {
-        border: 1px solid var(--primary-color);
+section.newest-items .offers > div:hover {
+    border: 1px solid var(--primary-color);
+}
+
+    section.newest-items .offers > div > div {
+        margin-top: auto;
     }
 
-section.newest-items .offers p {
-    display: inline-block;
-}
+    section.newest-items .offers p {
+        display: inline-block;
+    }
 
     section.newest-items .offers p.current-price {
         color: red;
