@@ -235,13 +235,19 @@ section.suggestions {
             font-weight: normal;
         }
 
-        section.suggestions .offers div {
+        section.suggestions .offers > div {
             border: 1px solid lightgray;
             padding: 10px;
+            display: flex;
+            flex-direction: column;
         }
 
-            section.suggestions .offers div:hover {
+            section.suggestions .offers > div:hover {
                 border: 1px solid var(--primary-color);
+            }
+
+            section.suggestions .offers > div > div {
+                margin-top: auto;
             }
 
         section.suggestions .offers p {

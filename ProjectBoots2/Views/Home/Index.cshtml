@@ -44,8 +44,13 @@ ViewData["Title"] = "Home ";
         @*<vc:ProductCard product="ViewBag.Product"></vc:ProductCard>*@
         @foreach(var product in ViewBag.Products) {
             <div>
-                    <a asp-controller="Product" asp-action="Index" asp-route-vrtId="@product.Variations[0].Id">
-                    <img src="@product.ProductImages[0].Url" width="100%" alt="boty1 image">
+                <a asp-controller="Product" asp-action="Index" asp-route-vrtId="@product.Variations[0].Id">
+                    @try
+                    { <img src="@product.ProductImages[0].Url" width="100%" alt="boty1 image"> }
+                    catch
+                    {
+                        <img src="~/img/Group%204.svg" alt="Boty logo" width="100%" class="boty-logo">
+                    }
                     <div>
                         <h3>@product.Title</h3>
                         <p class="current-price">@product.Variations[0].SalePrice Kč</p>
@@ -58,7 +63,9 @@ ViewData["Title"] = "Home ";
             </div>
         }
     </section>
-    <button class="primary-button">Zobrazit celou nabídku</button>
+    <a asp-controller="Home" asp-action="Index" asp-route-showAll="true">
+        <button class="primary-button">Zobrazit celou nabídku</button>
+    </a>
 </section>
 
 <div class="divider">

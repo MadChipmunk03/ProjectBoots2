@@ -10,7 +10,14 @@
 
 <section class="product-main">
     <section class="product-images">
-        <img src="@ViewBag.Product.ProductImages[0].Url" alt="bota image" class="product-image-main">
+        @try
+        {
+            <img src="@ViewBag.Product.ProductImages[0].Url" alt="bota image" class="product-image-main">
+        }
+        catch
+        {
+            <img src="~/img/Group%204.svg" alt="Boty logo" class="boty-logo product-image-main">
+        }
         @foreach (var image in ViewBag.Images)
         {
             <picture>
@@ -123,50 +130,30 @@
 <section class="suggestions">
     <h2 class="custom-header">Mohlo by se <span>Vám líbit</span></h2>
     <section class="offers">
-        <div>
-            <a href="ProductIndex.html">
-                <img src="~/img2/bota1.png" width="100%" alt="boty1 image">
-                <h3>Papučky barefoot hnědé kožené</h3>
-                <p class="current-price">529 Kč</p>
-                <p class="old-price">699 Kč</p>
-                <a href="DemandIndex.html">
-                    <img src="~/img/Group%206.png" alt="basket icon" class="basket-icon">
+        @foreach (var product in ViewBag.Offers)
+        {
+            <div>
+                <a asp-controller="Product" asp-action="Index" asp-route-vrtId="@product.Variations[0].Id">
+                    @try
+                    {
+                        <img src="@product.ProductImages[0].Url" width="100%" alt="boty1 image">
+                    }
+                    catch
+                    {
+                        <img src="~/img/Group%204.svg" alt="Boty logo" width="100%" class="boty-logo">
+                    }
+
+                    <div>
+                        <h3>@product.Title</h3>
+                        <p class="current-price">@product.Variations[0].SalePrice Kč</p>
+                        <p class="old-price">@product.Variations[0].Price Kč</p>
+                        <a href="DemandIndex.html">
+                            <img src="../img/Group%206.png" alt="basket icon" class="basket-icon">
+                        </a>
+                    </div>
                 </a>
-            </a>
-        </div>
-        <div>
-            <a href="ProductIndex.html">
-                <img src="~/img2/boty%20(6).png" width="100%" alt="boty1 image">
-                <h3>Papučky barefoot růžové</h3>
-                <p class="current-price">529 Kč</p>
-                <p class="old-price">699 Kč</p>
-                <a href="DemandIndex.html">
-                    <img src="~/img/Group%206.png" alt="basket icon" class="basket-icon">
-                </a>
-            </a>
-        </div>
-        <div>
-            <a href="ProductIndex.html">
-                <img src="~/img2/boty%20(2).png" width="100%" alt="boty1 image">
-                <h3>Sandálky modré umělé</h3>
-                <p class="current-price">529 Kč</p>
-                <p class="old-price">699 Kč</p>
-                <a href="DemandIndex.html">
-                    <img src="~/img/Group%206.png" alt="basket icon" class="basket-icon">
-                </a>
-            </a>
-        </div>
-        <div>
-            <a href="ProductIndex.html">
-                <img src="~/img2/boty%20(8).png" width="100%" alt="boty1 image">
-                <h3>Netlačící boty s vysokou špičkou</h3>
-                <p class="current-price">529 Kč</p>
-                <p class="old-price">699 Kč</p>
-                <a href="DemandIndex.html">
-                    <img src="~/img/Group%206.png" alt="basket icon" class="basket-icon">
-                </a>
-            </a>
-        </div>
+            </div>
+        }
     </section>
 </section>
 
