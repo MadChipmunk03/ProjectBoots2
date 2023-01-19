@@ -1,6 +1,7 @@
 ﻿@{
 ViewData["Title"] = "Home ";
 }
+@model HomeModel
 
 <section class="slideshow mobile-hidden">
     <img src="../img/Vrstva3.png" alt="slideshow" class="backgournd">
@@ -38,35 +39,98 @@ ViewData["Title"] = "Home ";
     <img src="../img/Group%20295.svg" alt="divider img">
 </div>
 
-<section class="newest-items">
-    <h2 class="custom-header">Nejnovější kousky <span>v naší nabídce</span></h2>
-    <section class="offers">
-        @*<vc:ProductCard product="ViewBag.Product"></vc:ProductCard>*@
-        @foreach(var product in ViewBag.Products) {
+
+<form asp-controller="Home" asp-action="Index" id="mainForm">
+    <section class="newest-items">
+
+        <section class="border p-2">
+
+            <h3 class="mt-3">Filtry</h3>
+            <hr />
             <div>
-                <a asp-controller="Product" asp-action="Index" asp-route-vrtId="@product.Variations[0].Id">
-                    @try
-                    { <img src="@product.ProductImages[0].Url" width="100%" alt="boty1 image"> }
-                    catch
+                <h4>Kategorie</h4>
+                <div class="category-path">
+                    @foreach (var item in ViewBag.CategoryParents)
                     {
-                        <img src="~/img/Group%204.svg" alt="Boty logo" width="100%" class="boty-logo">
+                        <p onclick="changeCategory(@item.Id)">@item.CategoryName -> </p>
                     }
-                    <div>
-                        <h3>@product.Title</h3>
-                        <p class="current-price">@product.Variations[0].SalePrice Kč</p>
-                        <p class="old-price">@product.Variations[0].Price Kč</p>
-                        <a href="DemandIndex.html">
-                            <img src="../img/Group%206.png" alt="basket icon" class="basket-icon">
-                        </a>
-                    </div>
-                </a>
+                    <select asp-for="CategoryId" asp-items="@ViewBag.CategorySelect" id="categoryIdInput" class="form-control-plaintext pt-0 mb-3 pl-3" style="width: 150px"></select>
+                </div>
+                <script>
+                    function changeCategory(id) {
+                        const input = document.getElementById("categoryIdInput")
+                        input.innerHTML = input.innerHTML + `<option value="${id}">${id}</option>`
+                        input.value = String(id);
+                        console.log(document.getElementById("categoryIdInput").value, String(id));
+                        document.getElementById("mainForm").submit();
+                    }
+                </script>
             </div>
+            <div>
+                <h4>Cena</h4>
+                <div class="form-group row mb-2">
+                    <label asp-for="PriceFrom" class="col-sm-2 col-form-label">Od: </label>
+                    <div class="col-sm-10">
+                        <input asp-for="PriceFrom" class="form-control" placeholder="minimální cena">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label asp-for="PriceTo" class="col-sm-2 col-form-label">Do: </label>
+                    <div class="col-sm-10">
+                        <input asp-for="PriceTo" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4>Seřadit</h4>
+                <select asp-for="SortType" asp-items="@ViewBag.SortSelect" class="form-control"></select>
+            </div>
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary">Filtrovat</button>
+            </div>
+        </section>
+
+        <h2 class="custom-header my-4">Nejnovější kousky <span>v naší nabídce</span></h2>
+        <section class="offers">
+            @foreach (var product in ViewBag.Products)
+            {
+                <div>
+                    <a asp-controller="Product" asp-action="Index" asp-route-vrtId="@product.Variations[0].Id">
+                        @try
+                        {
+                            <img src="@product.ProductImages[0].Url" width="100%" alt="boty1 image">
+                        }
+                        catch
+                        {
+                            <img src="~/img/Group%204.svg" alt="Boty logo" width="100%" class="boty-logo">
+                        }
+                        <div>
+                            <h3>@product.Title</h3>
+                            <p class="current-price">@product.Variations[0].SalePrice Kč</p>
+                            <p class="old-price">@product.Variations[0].Price Kč</p>
+                            <a href="DemandIndex.html">
+                                <img src="../img/Group%206.png" alt="basket icon" class="basket-icon">
+                            </a>
+                        </div>
+                    </a>
+                </div>
+            }
+        </section>
+        @if (!@ViewBag.ShowAll)
+        {
+            <div><input asp-for="ShowAll" id="showAllInput" hidden /></div>
+            <div class="show-all-btn">
+                <button class="primary-button" onclick="toggleShowAll()" type="button">Zobrazit celou nabídku</button>
+            </div>
+            <script>
+                function toggleShowAll() {
+                    document.getElementById("showAllInput").checked = !document.getElementById("showAllInput").checked;
+                    document.getElementById("mainForm").submit();
+                }
+            </script>
         }
     </section>
-    <a asp-controller="Home" asp-action="Index" asp-route-showAll="true">
-        <button class="primary-button">Zobrazit celou nabídku</button>
-    </a>
-</section>
+</form>
 
 <div class="divider">
     <hr>

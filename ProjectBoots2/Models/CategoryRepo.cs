@@ -33,6 +33,75 @@ namespace ProjectBoots2.Models
             }
         }
 
+        public List<Category> GetParents(Category? category, List<Category> parents)
+        {
+            if (category.ParentId == null) return parents;
+            Category parent = context.Categories.First(cat => cat.Id == category.ParentId);
+
+            List<Category> localParents = GetParents(parent, parents);
+            localParents.Add(parent);
+            return localParents;
+        }
+
+        public List<SelectListItem> GetChildrenSelect(Category? category)
+        {
+            List<SelectListItem> select = new List<SelectListItem>();
+            if (category != null)
+            {
+                select.Add(new SelectListItem() { Value = category.Id.ToString(), Text = "Vyberte kategorii", Selected = true });
+
+                select
+                    .AddRange(context.Categories
+                    .Where(cat => cat.ParentId == category.Id)
+                    .Select(cat =>
+                        new SelectListItem
+                        {
+                            Value = cat.Id.ToString(),
+                            Text = cat.CategoryName
+                        }
+                    )
+                    .ToList());
+            }
+            else
+            {
+                select.Add(new SelectListItem() { Value = null, Text = "Vyberte kategorii", Selected = true });
+                select
+                    .AddRange(context.Categories
+                    .Where(cat => cat.ParentId == null)
+                    .Select(cat =>
+                        new SelectListItem
+                        {
+                            Value = cat.Id.ToString(),
+                            Text = cat.CategoryName
+                        }
+                    )
+                    .ToList());
+            }
+
+            return select;
+        }
+
+        public List<Product> GetCategoryProducts(Category category)
+        {
+            List<Product> rawProducts = context.Products.AsNoTracking().ToList();
+            List<Product> filteredProducts = new List<Product>();
+            foreach (Product product in rawProducts)
+                if (IsProductInCategory(category, product)) filteredProducts.Add(context.Products.Find(product.Id));
+
+            return filteredProducts;
+        }
+
+        private bool IsProductInCategory(Category category, Product product)
+        {
+            if (product.CategoryId == category.Id) return true;
+            List<Category> children = context.Categories.Where(cat => cat.ParentId == category.Id).ToList();
+            foreach (Category child in children)
+            {
+                if (IsProductInCategory(child, product)) return true;
+            }
+            return false;
+        }
+
         public void Refresh()
         {
             Root.Children.Clear();

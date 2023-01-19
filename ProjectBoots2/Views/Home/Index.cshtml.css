@@ -77,7 +77,26 @@ color: var(--secondary-color)
 section.newest-items {
 display: flex;
 flex-direction: column;
-align-items: center;
+}
+
+section.newest-items h2.custom-header {
+    text-align: center;
+}
+
+/* category-path */
+.category-path {
+    display: flex;
+    color: var(--secondary-color);
+}
+
+.category-path p {
+    color: var(--primary-color);
+    margin-right: 4px;
+}
+
+.category-path p:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 section.newest-items .offers {
@@ -130,8 +149,13 @@ section.newest-items div:hover .basket-icon {
 display: block;
 }
 
+section.newest-items div.show-all-btn {
+    display: flex;
+    align-items: center;
+}
+
 section.newest-items button {
-margin-top: 20px;
+    margin: 20px auto 0 auto;
 }
 
 /* see-also */
