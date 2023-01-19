@@ -15,7 +15,6 @@ namespace ProjectBoots2.Controllers
 
         private void IndexBase(HomeModel homeModel)
         {
-
             Category category = context.Categories.FirstOrDefault(cat => cat.Id == homeModel.CategoryId);
 
             List<Product> products = new List<Product>();
@@ -24,22 +23,48 @@ namespace ProjectBoots2.Controllers
             else
                 products = context.Products.ToList();
 
-            products = homeModel.ShowAll || products.Count() < 8 ? products : products.GetRange(0, 8);
+            //add variation
             foreach (Product product in products)
             {
-                Variation variation = context.Variations.FirstOrDefault(vrt => vrt.ProductId == product.Id
-                                                                   && (vrt.SalePrice != null ? vrt.SalePrice : vrt.Price) > homeModel.PriceFrom
-                                                                   && (vrt.SalePrice != null ? vrt.SalePrice : vrt.Price) < homeModel.PriceTo
-                );
-                if (variation != null)
-                {
-                    product.Variations = new List<Variation>();
-                    product.Variations.Add(variation);
-                }
-            }
+                List<Variation> variations = context.Variations
+                    .Where(vrt => vrt.ProductId == product.Id
+                              && (vrt.SalePrice != null ? vrt.SalePrice : vrt.Price) > homeModel.PriceFrom
+                              && (vrt.SalePrice != null ? vrt.SalePrice : vrt.Price) < homeModel.PriceTo)
+                    .ToList();
+                if (variations.Count <= 0) continue;
 
+                Variation variation = new Variation();
+
+                if (homeModel.SortType == ProductSortTypes.Default) variation = variations[0];
+                else if (homeModel.SortType == ProductSortTypes.CheapToExpensive || homeModel.SortType == ProductSortTypes.ExpensiveToCheap)
+                {
+                    variations = variations.OrderBy(vrt => vrt.SalePrice != null ? vrt.SalePrice : vrt.Price).ToList();
+                    if (homeModel.SortType == ProductSortTypes.CheapToExpensive) variation = variations[0];
+                    else if (homeModel.SortType == ProductSortTypes.ExpensiveToCheap) variation = variations[variations.Count - 1];
+                }
+
+                product.Variations = new List<Variation>();
+                product.Variations.Add(variation);
+            }
             products = products.Where(prd => prd.Variations != null).ToList();
 
+
+            //orderBy
+            if (homeModel.SortType == ProductSortTypes.ExpensiveToCheap)
+            {
+                products = products.OrderByDescending(prd =>
+                    prd.Variations[0].SalePrice != null ? prd.Variations[0].SalePrice : prd.Variations[0].Price
+                ).ToList();
+            }
+            else if (homeModel.SortType == ProductSortTypes.CheapToExpensive)
+            {
+                products = products.OrderBy(prd =>
+                    prd.Variations[0].SalePrice != null ? prd.Variations[0].SalePrice : prd.Variations[0].Price
+                ).ToList();
+            }
+
+            //showAll
+            products = homeModel.ShowAll || products.Count() < 8 ? products : products.GetRange(0, 8);
             if (products.Count() < 8) homeModel.ShowAll = true;
 
             List<ProductImage> images = context.ProductImages.ToList();

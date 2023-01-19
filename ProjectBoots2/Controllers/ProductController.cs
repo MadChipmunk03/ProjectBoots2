@@ -10,7 +10,7 @@ namespace ProjectBoots2.Controllers
     public class ProductController : Controller
     {
         dbBootsContext context = new dbBootsContext();
-        CategoryRepo categoryRepo = new CategoryRepo();
+        //CategoryRepo categoryRepo = new CategoryRepo();
 
         public IActionResult Index(int vrtId, int productId, int size, string color) =>
             vrtId == 0 ? IndexChangeVariation(productId, size, color) : IndexVariation(vrtId);
