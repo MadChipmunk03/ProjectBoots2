@@ -44,9 +44,11 @@ namespace ProjectBoots2.Controllers
                     i++;
                 }
             }
+
             foreach(Product ofr in offers)
             {
                 Variation ofrVariation = context.Variations.AsNoTracking().First(vrt => vrt.ProductId == ofr.Id);
+                ofr.Variations = new List<Variation>();
                 ofr.Variations.Add(ofrVariation);
             }
 

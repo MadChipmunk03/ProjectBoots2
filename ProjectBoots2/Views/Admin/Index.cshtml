@@ -12,9 +12,10 @@
     </script>
 
     <nav>
-                        <h3><a asp-controller="Admin" asp-action="Index" asp-fragment="administratori">Administrátoři</a></h3>
-                        <h3><a asp-controller="Admin" asp-action="Index" asp-fragment="kategorie">Kategorie</a></h3>
-                        <h3><a asp-controller="Admin" asp-action="Index" asp-fragment="produkty">Produkty</a></h3>
+        <h3><a asp-controller="Admin" asp-action="Index" asp-fragment="administratori">Administrátoři</a></h3>
+        <h3><a asp-controller="Admin" asp-action="Index" asp-fragment="kategorie">Kategorie</a></h3>
+        <h3><a asp-controller="Admin" asp-action="Index" asp-fragment="produkty">Produkty</a></h3>
+        <h3><a asp-controller="Admin" asp-action="Index" asp-fragment="orders">Objednávky</a></h3>
     </nav>
     <hr class="mb-4"/>
     <h2 id="administratori">Administrátoři</h2>
@@ -83,4 +84,19 @@
     <div class="text-end">
         <a asp-controller="Admin" asp-action="ModifyProduct" class="btn btn-primary">Přidat</a>
     </div>
+
+    <h2 id="orders">Objednávky</h2>
+    <table class="table table-striped table-hover">
+        <tr class="bg-primary text-white">
+            <th>Id</th>
+            <th>Objednáka</th>
+        </tr>
+        @foreach (var item in ViewBag.Orders)
+        {
+            <tr class="product-item" onclick="RedirectTo('./Admin/Order/@item.Id')">
+                <td> @item.Id </td>
+                <td> @item.Address </td>
+            </tr>
+        }
+    </table>
 }

@@ -23,6 +23,7 @@ namespace ProjectBoots2.Controllers
             int? total = 0;
             foreach (CartItem item in cartItems)
             {
+                if (item.Amount == 0) continue;
                 Variation variation = context.Variations.First(vrt => vrt.Id == item.VariationId);
                 variation.Product = context.Products.First(prd => prd.Id == variation.ProductId);
                 variation.Product.ProductImages = new List<ProductImage>();
@@ -66,8 +67,8 @@ namespace ProjectBoots2.Controllers
         {
             List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(HttpContext.Session.GetString("cart"));
             CartItem cartItem = cartItems.First(item => item.VariationId == vrtId);
-            Variation variation = context.Variations.Find(vrtId);
-            if (variation.InStock < amount) amount = variation.InStock;
+            //Variation variation = context.Variations.Find(vrtId);
+            //if (variation.InStock < amount) amount = (int)variation.InStock;
             cartItem.Amount = amount;
             HttpContext.Session.SetString("cart", JsonSerializer.Serialize(cartItems));
 
@@ -143,6 +144,7 @@ namespace ProjectBoots2.Controllers
             List<OrderItem> orderItems = new List<OrderItem>();
             foreach(CartItem item in cartItems)
             {
+                if (item.Amount == 0) continue;
                 OrderItem orderItem = new OrderItem();
                 Variation variation = context.Variations.First(vrt => vrt.Id == item.VariationId);
 

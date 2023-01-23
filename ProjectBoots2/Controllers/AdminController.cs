@@ -25,6 +25,7 @@ namespace ProjectBoots2.Controllers
             this.ViewBag.Admins = context.Administrators;
             this.ViewBag.Products = context.Products;
             this.ViewBag.Categories = categoryRepo.Categories.Where(cat => cat.Id != 0);
+            this.ViewBag.Orders = context.Orders;
             return View();
         }
 
@@ -89,6 +90,26 @@ namespace ProjectBoots2.Controllers
         public IActionResult ModifyVariation(Variation variation)
         {
             return AdminProductController.ModifyVariation(variation);
+        }
+
+        /* order */
+        public IActionResult Order(int id)
+        {
+            ViewBag.Order = context.Orders.Find(id);
+            List<OrderItem> orderItems = context.OrderItems.Where(item => item.OrderId == id).ToList();
+            foreach(OrderItem item in orderItems)
+                item.Variation = context.Variations.AsNoTracking().First(vrt => vrt.Id == item.VariationId);
+
+            ViewBag.OrderItems = orderItems;
+            return View();
+        }
+
+        public IActionResult CheckOrder(int id)
+        {
+            Order order = context.Orders.Find(id);
+            order.Finished = !order.Finished;
+
+            return RedirectToAction("Index");
         }
     }
 }

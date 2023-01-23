@@ -1,0 +1,67 @@
+﻿@page
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<h1 class="text-center">Objednávka #@ViewBag.Order.Id</h1>
+
+<div class="border p-4 my-4">
+    <table class="table table-borderless">
+        <tr>
+            <th colspan="2">Informace o objednávce</th>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>@ViewBag.Order.Email</td>
+        </tr>
+        <tr>
+            <td>Způsob platby</td>
+            <td>@ViewBag.Order.Payment</td>
+        </tr>
+        <tr class="mb-4">
+            <td>Způsob doručení</td>
+            <td>@ViewBag.Order.Shipping</td>
+        </tr>
+        <tr>
+            <td colspan="2">Adresa:</td>
+        </tr>
+        <tr>
+            <td>&nbsp</td>
+            <td>@ViewBag.Order.FirstName @ViewBag.Order.LastName</td>
+        </tr>
+        <tr>
+            <td>&nbsp</td>
+            <td>@ViewBag.Order.Address</td>
+        </tr>
+        <tr>
+            <td>&nbsp</td>
+            <td>@ViewBag.Order.City</td>
+        </tr>
+        <tr>
+            <td>&nbsp</td>
+            <td>@ViewBag.Order.PostalCode</td>
+        </tr>
+    </table>
+</div>
+
+<div class="border p-4 mb-4">
+    <table class="table table-striped">
+        <tr class="bg-primary text-white">
+            <th>Id</th>
+            <th>Id produktu</th>
+            <th>Variace</th>
+            <th>Množství</th>
+            <th>Cena</th>
+        </tr>
+        @foreach (var item in ViewBag.OrderItems)
+        {
+            <tr class="product-item" onclick="RedirectTo('./Admin/Order/@item.Id')">
+                <td> @item.Id </td>
+                <td> @item.Variation.ProductId </td>
+                <td> @item.Variation.Color, @item.Variation.Size </td>
+                <td> @item.Quantity </td>
+                <td> @item.Price </td>
+            </tr>
+        }
+    </table>
+</div>
