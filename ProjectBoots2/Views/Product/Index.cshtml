@@ -76,10 +76,28 @@
                 }
             </div>
             <div class="order-btn">
-                <button class="primary-button" onclick="location.href='DemandIndex.html'">
-                    <img src="~/img/Group%206.png" alt="basket icon">
-                    <p>Přidat do košiku</p>
-                </button>
+                @if(ViewBag.Amount <= 0) {
+                    <a asp-controller="Product" asp-action="Index" asp-route-vrtId="@ViewBag.Variation.Id" asp-route-amount="@(ViewBag.Amount + 1)">
+                        <button class="primary-button">
+                            <img src="~/img/Group%206.png" alt="basket icon">
+                            <p>Přidat do košiku</p>
+                        </button>
+                    </a>
+                }
+                else
+                {
+                        <a asp-controller="Product" asp-action="Index" asp-route-vrtId="@ViewBag.Variation.Id" asp-route-amount="@(ViewBag.Amount - 1)">
+                            <button class="primary-button px-3">
+                                -
+                            </button>
+                        </a>
+                        <p class="pt-2 px-3">@ViewBag.Amount</p>
+                        <a asp-controller="Product" asp-action="Index" asp-route-vrtId="@ViewBag.Variation.Id" asp-route-amount="@(ViewBag.Amount + 1)">
+                            <button class="primary-button px-3">
+                                +
+                            </button>
+                        </a>
+                }
             </div>
         </section>
     </section>
@@ -186,5 +204,5 @@
             </span>
             <p>Jak měřit velikost</p>
         </div>
-    </a>
-</section>
+        </a>
+    </section>

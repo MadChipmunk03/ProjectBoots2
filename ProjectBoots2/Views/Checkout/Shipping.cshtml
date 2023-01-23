@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "_LayoutCheckout";
+}
+@model Order
+
+<form asp-controller="Checkout" asp-action="PostShipping">
+    <input asp-for="Email" hidden />
+    <input asp-for="FirstName" hidden />
+    <input asp-for="LastName" hidden />
+    <input asp-for="Address" hidden />
+    <input asp-for="City" hidden />
+    <input asp-for="PostalCode" hidden />
+    <input asp-for="Payment" hidden />
+
+    <h2 class="custom-header">Způsob doručení</h2>
+
+    <div class="my-4">
+        @foreach(var shipping in Model.Shippings) {
+            <input type="radio" asp-for="Shipping" value="@shipping" id="@shipping" /> <label for="@shipping">@shipping</label>  <br />
+        }
+    </div>
+
+    <div class="d-inline mt-4">
+        <div class="text-start">
+            <a asp-controller="Checkout" asp-action="Payment">< Informace</a>
+        </div>
+        <div class="text-end">
+            <button class="primary-button" type="submit">Další</button>
+        </div>
+    </div>
+</form>

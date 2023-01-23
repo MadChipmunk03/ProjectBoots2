@@ -1,0 +1,55 @@
+﻿<h2 class="custom-header my-4">Vaše botičky <span>v košíku</span></h2>
+
+@if (@TempData["orderItems"] != null)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Obrázek</th>
+                <th scope="col">Produkt</th>
+                <th scope="col">Cena</th>
+                <th scope="col">Množství</th>
+                <th scope="col">Cena celkem</th>
+                <th scope="col">Odstranit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (OrderItem item in (List<OrderItem>)TempData["orderItems"])
+            {
+
+                <tr>
+                    <td>
+                        <img width="150px" src="@item.Variation.Product.ProductImages[0].Url" alt="obrázek boty" />
+                    </td>
+                    <td>@item.Variation.Product.Title <span class="text-secondary">(@item.Variation.Color, @item.Variation.Size)</span></td>
+                    <td>@(item.Variation.SalePrice != null ? item.Variation.SalePrice : item.Variation.Price) Kč</td>
+                    <td>
+                        <a asp-controller="Checkout" asp-action="CartAmount" asp-route-vrtId="@item.Variation.Id" asp-route-amount="@(item.Quantity - 1)" class="mr-2">(-)</a>
+                        @item.Quantity
+                        <a asp-controller="Checkout" asp-action="CartAmount" asp-route-vrtId="@item.Variation.Id" asp-route-amount="@(item.Quantity + 1)" class="ml-2">(+)</a>
+                    </td>
+                    <td>@(item.Quantity * (item.Variation.SalePrice != null ? item.Variation.SalePrice : item.Variation.Price)) Kč</td>
+                    <td>X</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3 class="text-end fw-bold">Celkem: @TempData["total"]</h3>
+    <div class="text-end mt-3">
+        <div class="d-inline-block">
+            <a asp-controller="Home" asp-action="Index">
+                <button class="primary-button">Zpět do obchodu</button>
+            </a>
+            <a asp-controller="Checkout" asp-action="CartClear">
+                <button class="primary-button mx-2">Vyčistit košík</button>
+            </a>
+            <a asp-controller="Checkout" asp-action="Information">
+                <button class="primary-button">Pokračovat</button>
+            </a>
+        </div>
+    </div>
+}
+else {
+    <h1 class="text-center my-5">Váš košík je prázdný</h1>
+}

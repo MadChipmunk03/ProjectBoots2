@@ -1,0 +1,47 @@
+﻿@{
+    Layout = "_LayoutCheckout";
+}
+<h4 class="custom-header my-4">Objedkávka <span>#@ViewBag.Order.Id</span> byla úspěšně vytvořena</h4>
+
+<div class="border p-4 mb-4">
+    Objednávka byla úspěšně dokončena. Teď už jen nečekejte na žádný mail, protože žádný nedorazí.
+</div>
+
+<div class="border p-4">
+    <table class="table table-borderless">
+        <tr>
+            <th colspan="2">Informace o objednávce</th>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>@ViewBag.Order.Email</td>
+        </tr>
+        <tr>
+            <td>Způsob platby</td>
+            <td>@ViewBag.Order.Payment</td>
+        </tr>
+        <tr class="mb-4">
+            <td>Způsob doručení</td>
+            <td>@ViewBag.Order.Shipping</td>
+        </tr>
+        <tr>
+            <td colspan="2">Adresa:</td>
+        </tr>
+        <tr>
+            <td>&nbsp</td>
+            <td>@ViewBag.Order.FirstName @ViewBag.Order.LastName</td>
+        </tr>
+        <tr>
+            <td>&nbsp</td>
+            <td>@ViewBag.Order.Address</td>
+        </tr>
+        <tr>
+            <td>&nbsp</td>
+            <td>@ViewBag.Order.City</td>
+        </tr>
+        <tr>
+            <td>&nbsp</td>
+            <td>@ViewBag.Order.PostalCode</td>
+        </tr>
+    </table>
+</div>

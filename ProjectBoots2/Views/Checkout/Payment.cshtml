@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "_LayoutCheckout";
+}
+@model Order
+
+<form asp-controller="Checkout" asp-action="PostPayment">
+    <input asp-for="Email" hidden />
+    <input asp-for="FirstName" hidden />
+    <input asp-for="LastName" hidden />
+    <input asp-for="Address" hidden />
+    <input asp-for="City" hidden />
+    <input asp-for="PostalCode" hidden />
+    <input asp-for="Shipping" hidden />
+
+    <h2 class="custom-header">Způsob platby</h2>
+
+    <div class="my-4">
+        @foreach (var payment in Model.Payments)
+        {
+            <input type="radio" asp-for="Payment" value="@payment" id="@payment" /> <label for="@payment">@payment</label>  <br />
+        }
+    </div>
+
+    <div class="d-inline mt-4">
+        <div class="text-start">
+            <a asp-controller="Checkout" asp-action="Confirm">< Zpusob doručení</a>
+        </div>
+        <div class="text-end">
+            <button class="primary-button" type="submit">Odeslat objednávku</button>
+        </div>
+    </div>
+</form>

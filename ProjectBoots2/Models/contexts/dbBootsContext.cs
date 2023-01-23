@@ -113,6 +113,17 @@ namespace ProjectBoots2.Models.contexts
                 entity.Property(e => e.PostalCode)
                     .HasMaxLength(255)
                     .HasColumnName("postalCode");
+
+                entity.Property(e => e.Shipping)
+                    .HasMaxLength(128)
+                    .HasColumnName("shipping");
+
+                entity.Property(e => e.Payment)
+                    .HasMaxLength(128)
+                    .HasColumnName("payment");
+
+                entity.Property(e => e.Finished)
+                    .HasColumnName("finished");
             });
 
             modelBuilder.Entity<OrderItem>(entity =>

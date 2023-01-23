@@ -1,0 +1,39 @@
+﻿@{
+    Layout = "_LayoutBoots";
+}
+
+@if(@ViewContext.RouteData.Values["action"].ToString() != "Confirm"){
+    <section class="category-path mb-5">
+        <a asp-controller="Checkout" asp-action="Cart">Košík > </a>
+        <a asp-controller="Checkout" asp-action="Information" class="@(@ViewContext.RouteData.Values["action"].ToString() == "Information" ? "fw-bold" : "")">Údaje > </a>
+        <a asp-controller="Checkout" asp-action="Shipping" class="@(@ViewContext.RouteData.Values["action"].ToString() == "Shipping" ? "fw-bold" : "")">Pošta > </a>
+        <a asp-controller="Checkout" asp-action="Payment" class="@(@ViewContext.RouteData.Values["action"].ToString() == "Payment" ? "fw-bold" : "")">Platba</a>
+    </section>
+}
+
+<div class="row">
+    <div class="col">
+        @RenderBody()
+    </div>
+    <div class="col">
+        @if (@TempData["orderItems"] != null)
+        {
+            <table class="table">
+                <tbody>
+                    @foreach (OrderItem item in (List<OrderItem>)TempData["orderItems"])
+                    {
+                        <tr>
+                            <td>
+                                <img width="50px" src="@item.Variation.Product.ProductImages[0].Url" alt="obrázek boty" />
+                            </td>
+                            <td>@item.Variation.Product.Title <span class="text-secondary">(@item.Variation.Color, @item.Variation.Size)</span></td>
+                            <td>@(item.Quantity * (item.Variation.SalePrice != null ? item.Variation.SalePrice : item.Variation.Price)) Kč</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <h4 class="text-end fw-bold">Celkem: @TempData["total"]</h4>
+        }
+    </div>
+</div>

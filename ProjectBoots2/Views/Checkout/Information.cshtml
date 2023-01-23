@@ -1,0 +1,67 @@
+﻿@{
+    Layout = "_LayoutCheckout";
+}
+@model Order
+
+<form asp-controller="Checkout" asp-action="PostInformation">
+    <input asp-for="Shipping" hidden />
+    <input asp-for="Payment" hidden />
+
+    <h2 class="custom-header">Fakturační údaje</h2>
+
+    <div class="my-4">
+        <div><label asp-for="Email">Emaila</label></div>
+        <div><input asp-for="Email" class="form-control" /></div>
+        <div><span asp-validation-for="Email"></span></div>
+    </div>
+
+    <div class="row my-4">
+        <div class="col">
+            <div>
+                <div><label asp-for="FirstName">Jméno</label></div>
+                <div><input asp-for="FirstName" class="form-control" /></div>
+                <div><span asp-validation-for="FirstName"></span></div>
+            </div>
+        </div>
+        <div class="col">
+            <div>
+                <div><label asp-for="LastName">Přijmení</label></div>
+                <div><input asp-for="LastName" class="form-control" /></div>
+                <div><span asp-validation-for="LastName"></span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="my-4">
+        <div><label asp-for="Address">Adresa</label></div>
+        <div><input asp-for="Address" class="form-control" /></div>
+        <div><span asp-validation-for="Address"></span></div>
+    </div>
+
+    <div class="row my-4">
+        <div class="col">
+            <div>
+                <div><label asp-for="City">Město</label></div>
+                <div><input asp-for="City" class="form-control" /></div>
+                <div><span asp-validation-for="City"></span></div>
+            </div>
+        </div>
+        <div class="col">
+            <div>
+                <div><label asp-for="PostalCode">Směrovací číslo</label></div>
+                <div><input asp-for="PostalCode" class="form-control" /></div>
+                <div><span asp-validation-for="PostalCode"></span></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="d-inline mt-4">
+        <div class="text-start">
+            <a asp-controller="Checkout" asp-action="Cart">< Zpět do košíku</a>
+        </div>
+        <div class="text-end">
+            <button class="primary-button" type="submit">Další</button>
+        </div>
+    </div>
+</form>

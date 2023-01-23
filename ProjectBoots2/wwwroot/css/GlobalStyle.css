@@ -8,6 +8,14 @@ a {
     text-decoration: none;
 }
 
+/* category-path */
+
+.category-path a {
+    margin: 10px auto;
+    display: inline-block;
+    color: var(--secondary-color);
+}
+
 /* CUSTOM COMPONENTS */
 
 .primary-button {
@@ -18,12 +26,12 @@ a {
     cursor: pointer;
 }
 
-h2.custom-header {
+.custom-header {
     color: var(--primary-color);
     font-weight: normal;
 }
 
-h2.custom-header span {
+.custom-header span {
     color: var(--secondary-color);
     font-weight: bold;
 }

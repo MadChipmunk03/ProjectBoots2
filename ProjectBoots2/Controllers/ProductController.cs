@@ -4,6 +4,7 @@ using ProjectBoots2.Models;
 using ProjectBoots2.Models.contexts;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace ProjectBoots2.Controllers
 {
@@ -12,8 +13,9 @@ namespace ProjectBoots2.Controllers
         dbBootsContext context = new dbBootsContext();
         //CategoryRepo categoryRepo = new CategoryRepo();
 
-        public IActionResult Index(int vrtId, int productId, int size, string color) =>
-            vrtId == 0 ? IndexChangeVariation(productId, size, color) : IndexVariation(vrtId);
+        public IActionResult Index(int vrtId, int amount, int productId, int size, string color) =>
+            vrtId == 0 ? IndexChangeVariation(productId, size, color) : 
+                amount == 0 ? IndexVariation(vrtId) : IndexChangeAmount(vrtId, amount);
 
         private void IndexBase(Variation variation)
         {
@@ -44,7 +46,7 @@ namespace ProjectBoots2.Controllers
             }
             foreach(Product ofr in offers)
             {
-                Variation ofrVariation = context.Variations.First(vrt => vrt.ProductId == ofr.Id);
+                Variation ofrVariation = context.Variations.AsNoTracking().First(vrt => vrt.ProductId == ofr.Id);
                 ofr.Variations.Add(ofrVariation);
             }
 
@@ -52,12 +54,46 @@ namespace ProjectBoots2.Controllers
             foreach (Product offer in offers)
                 offer.ProductImages = images.Where(img => img.ProductId == offer.Id).ToList();
 
+            string? cartSessionString = HttpContext.Session.GetString("cart");
+            if (cartSessionString == null)
+            {
+                HttpContext.Session.SetString("cart", JsonSerializer.Serialize(new List<CartItem>()));
+                cartSessionString = HttpContext.Session.GetString("cart");
+            }
+            List<CartItem> cartItems = JsonSerializer.Deserialize<List<CartItem>>(cartSessionString);
+            CartItem cartItem = cartItems.FirstOrDefault(item => item.VariationId == variation.Id);
+            if (cartItem == null)
+            {
+                cartItem = new CartItem() { VariationId = variation.Id };
+                cartItems.Add(cartItem);
+                string jsonString = JsonSerializer.Serialize(cartItems);
+                HttpContext.Session.SetString("cart", jsonString);
+            }
+
+            int amount = cartItem.Amount;
+
+            ViewBag.Amount = amount;
             ViewBag.Offers = offers;
             ViewBag.Variation = variation;
             ViewBag.Product = product;
             ViewBag.Images = product.ProductImages;
             ViewBag.Sizes = sizes;
             ViewBag.Colors = colors;
+        }
+
+        private IActionResult IndexChangeAmount(int vrtId, int amount)
+        {
+            Variation variation = context.Variations.First(vrt => vrt.Id == vrtId);
+
+            List<CartItem> cart = JsonSerializer.Deserialize<List<CartItem>>(HttpContext.Session.GetString("cart"));
+            CartItem cartItem = cart.FirstOrDefault(item => item.VariationId == variation.Id);
+            if (cartItem == null) cart.Add(new CartItem() { VariationId = variation.Id, Amount = amount });
+            else cartItem.Amount = amount;
+            HttpContext.Session.SetString("cart", JsonSerializer.Serialize(cart));
+
+            IndexBase(variation);
+
+            return View();
         }
 
         private IActionResult IndexVariation(int vrtId)
